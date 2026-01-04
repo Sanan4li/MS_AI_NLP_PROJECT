@@ -1,0 +1,75 @@
+.history-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.history-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.history-empty {
+  color: #999;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-item {
+  background: #f8f9ff;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.history-item:hover {
+  background: #e8ebff;
+  border-color: #667eea;
+  transform: translateX(4px);
+}
+
+.history-question {
+  font-size: 0.875rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.history-date {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Scrollbar styling */
+.history-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.history-panel::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.history-panel::-webkit-scrollbar-thumb:hover {
+  background: #5568d3;
+}
