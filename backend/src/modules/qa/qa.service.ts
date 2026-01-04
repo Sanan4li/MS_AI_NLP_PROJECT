@@ -1,26 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import OpenAI from 'openai';
+import { Ollama } from 'ollama';
 import { Repository } from 'typeorm';
 import { Embedding } from '../../entities/embedding.entity';
 import { QAHistory } from '../../entities/qa-history.entity';
 import { EmbeddingService } from '../embedding/embedding.service';
+// Keep OpenAI import removed since embeddings are handled by EmbeddingService
 
 @Injectable()
 export class QAService {
-  private openai: OpenAI;
+  private ollama: Ollama;
 
   constructor(
-    @InjectRepository(QAHistory)
     private qaHistoryRepository: Repository<QAHistory>,
-    @InjectRepository(Embedding)
     private embeddingRepository: Repository<Embedding>,
     private embeddingService: EmbeddingService,
     private configService: ConfigService,
   ) {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || '',
+    this.ollama = new Ollama({
+      host: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
     });
   }
 
@@ -101,28 +99,30 @@ export class QAService {
     context: string,
   ): Promise<string> {
     const systemPrompt = `You are a helpful assistant that answers questions based on the provided context. 
-If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
-Always provide accurate, concise, and helpful answers.`;
+  If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
+  Always provide accurate, concise, and helpful answers.`;
 
     const userPrompt = `Context:
-${context}
-
-Question: ${question}
-
-Answer:`;
+  ${context}
+  
+  Question: ${question}
+  
+  Answer:`;
 
     try {
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+      const response = await this.ollama.chat({
+        model: 'gemma3:4b',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.7,
-        max_tokens: 500,
+        options: {
+          temperature: 0.7,
+          num_predict: 500, // equivalent to max_tokens
+        },
       });
 
-      return response.choices[0].message.content || 'No answer generated';
+      return response.message.content || 'No answer generated';
     } catch (error) {
       console.error('Error generating answer:', error);
       throw error;

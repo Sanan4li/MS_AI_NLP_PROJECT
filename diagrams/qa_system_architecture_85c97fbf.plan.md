@@ -32,7 +32,7 @@ flowchart TB
         API["REST API"]
         EmbedService["Embedding Service"]
         SearchService["Vector Search Service"]
-        LLMService["LLM Service<br/>gpt-4o-mini"]
+        LLMService["LLM Service<br/>Ollama gemma3:4b"]
     end
 
     subgraph Frontend [React Frontend]
@@ -53,8 +53,6 @@ flowchart TB
     API -->|"Return answer"| Display
 ```
 
-
-
 ## Component Details
 
 ### 1. Data Ingestion Pipeline (One-time/Batch Process)
@@ -73,7 +71,7 @@ erDiagram
         string filepath
         timestamp created_at
     }
-    
+
     embeddings {
         uuid id PK
         uuid document_id FK
@@ -82,7 +80,7 @@ erDiagram
         int chunk_index
         timestamp created_at
     }
-    
+
     qa_history {
         uuid id PK
         text question
@@ -91,11 +89,9 @@ erDiagram
         json source_chunks
         timestamp created_at
     }
-    
+
     documents ||--o{ embeddings : contains
 ```
-
-
 
 ### 3. Question-Answer Flow
 
@@ -105,6 +101,7 @@ sequenceDiagram
     participant React as React Frontend
     participant NestJS as NestJS Backend
     participant OpenAI as OpenAI API
+    participant Ollama as Ollama Local
     participant PG as PostgreSQL
 
     User->>React: Enter question
@@ -113,14 +110,12 @@ sequenceDiagram
     OpenAI-->>NestJS: Question vector
     NestJS->>PG: Vector similarity search
     PG-->>NestJS: Top K relevant chunks
-    NestJS->>OpenAI: Send context + question to GPT-4o-mini
-    OpenAI-->>NestJS: Generated answer
+    NestJS->>Ollama: Send context + question to gemma3:4b
+    Ollama-->>NestJS: Generated answer
     NestJS->>PG: Store Q&A in qa_history
     NestJS-->>React: Return answer + sources
     React-->>User: Display answer
 ```
-
-
 
 ## Project Structure
 
@@ -141,8 +136,6 @@ NLP_Project/
 └── scripts/                 # Data ingestion scripts
 ```
 
-
-
 ## Key Technologies
 
-| Component | Technology ||-----------|------------|| Frontend | React + TypeScript + Vite || Backend | NestJS + TypeORM || Database | PostgreSQL + pgvector || Embeddings | OpenAI text-embedding-3-small || LLM | OpenAI gpt-4o-mini |
+| Component | Technology ||-----------|------------|| Frontend | React + TypeScript + Vite || Backend | NestJS + TypeORM || Database | PostgreSQL + pgvector || Embeddings | OpenAI text-embedding-3-small || LLM | Ollama gemma3:4b (local) |

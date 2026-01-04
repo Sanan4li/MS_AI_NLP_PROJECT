@@ -8,41 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QAService = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const typeorm_1 = require("@nestjs/typeorm");
-const openai_1 = __importDefault(require("openai"));
-const typeorm_2 = require("typeorm");
-const embedding_entity_1 = require("../../entities/embedding.entity");
-const qa_history_entity_1 = require("../../entities/qa-history.entity");
+const ollama_1 = require("ollama");
+const typeorm_1 = require("typeorm");
 const embedding_service_1 = require("../embedding/embedding.service");
 let QAService = class QAService {
     qaHistoryRepository;
     embeddingRepository;
     embeddingService;
     configService;
-    openai;
+    ollama;
     constructor(qaHistoryRepository, embeddingRepository, embeddingService, configService) {
         this.qaHistoryRepository = qaHistoryRepository;
         this.embeddingRepository = embeddingRepository;
         this.embeddingService = embeddingService;
         this.configService = configService;
-        this.openai = new openai_1.default({
-            apiKey: process.env.OPENAI_API_KEY || '',
+        this.ollama = new ollama_1.Ollama({
+            host: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         });
     }
     async askQuestion(question) {
         try {
             const questionEmbedding = await this.embeddingService.createEmbedding(question);
-            const relevantChunks = await this.searchSimilarEmbeddings(questionEmbedding, 5);
+            const relevantChunks = await this.searchSimilarEmbeddings(questionEmbedding, 3);
             const context = relevantChunks
                 .map((chunk, index) => `[${index + 1}] ${chunk.content}`)
                 .join('\n\n');
@@ -62,7 +53,7 @@ let QAService = class QAService {
             throw error;
         }
     }
-    async searchSimilarEmbeddings(queryEmbedding, topK = 5) {
+    async searchSimilarEmbeddings(queryEmbedding, topK = 3) {
         const embeddingString = JSON.stringify(queryEmbedding);
         const query = `
       SELECT *
@@ -84,25 +75,27 @@ let QAService = class QAService {
     }
     async generateAnswer(question, context) {
         const systemPrompt = `You are a helpful assistant that answers questions based on the provided context. 
-If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
-Always provide accurate, concise, and helpful answers.`;
+  If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
+  Always provide accurate, concise, and helpful answers.`;
         const userPrompt = `Context:
-${context}
-
-Question: ${question}
-
-Answer:`;
+  ${context}
+  
+  Question: ${question}
+  
+  Answer:`;
         try {
-            const response = await this.openai.chat.completions.create({
-                model: 'gpt-4o-mini',
+            const response = await this.ollama.chat({
+                model: 'gemma3:4b',
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: userPrompt },
                 ],
-                temperature: 0.7,
-                max_tokens: 500,
+                options: {
+                    temperature: 0.7,
+                    num_predict: 500,
+                },
             });
-            return response.choices[0].message.content || 'No answer generated';
+            return response.message.content || 'No answer generated';
         }
         catch (error) {
             console.error('Error generating answer:', error);
@@ -128,10 +121,8 @@ Answer:`;
 exports.QAService = QAService;
 exports.QAService = QAService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(qa_history_entity_1.QAHistory)),
-    __param(1, (0, typeorm_1.InjectRepository)(embedding_entity_1.Embedding)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        typeorm_1.Repository,
         embedding_service_1.EmbeddingService,
         config_1.ConfigService])
 ], QAService);

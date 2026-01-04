@@ -8,7 +8,7 @@ export declare class QAService {
     private embeddingRepository;
     private embeddingService;
     private configService;
-    private openai;
+    private ollama;
     constructor(qaHistoryRepository: Repository<QAHistory>, embeddingRepository: Repository<Embedding>, embeddingService: EmbeddingService, configService: ConfigService);
     askQuestion(question: string): Promise<{
         answer: string;
