@@ -149,3 +149,5 @@ CREATE EXTENSION vector;
 - Verify your API key is correct in `.env`
 - Check your OpenAI account has credits
 - Ensure you have access to the models: `text-embedding-3-small` and `gpt-4o-mini`
+
+

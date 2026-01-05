@@ -4,7 +4,7 @@ Use this checklist to ensure your Document Q&A system is properly configured.
 
 ## ✅ Prerequisites
 
-- [ ] Node.js v18+ installed (`node --version`)
+- [ ] Node.js v22+ installed (`node --version`)
 - [ ] PostgreSQL installed (`psql --version`)
 - [ ] pgvector extension available
 - [ ] OpenAI API key obtained
@@ -17,6 +17,7 @@ Use this checklist to ensure your Document Q&A system is properly configured.
 - [ ] Can connect to database (`psql -U postgres -d qa_system`)
 
 **Verify:**
+
 ```bash
 psql -U postgres -d qa_system -c "SELECT * FROM pg_extension WHERE extname = 'vector';"
 ```
@@ -32,6 +33,7 @@ Should return one row with extension details.
 - [ ] Port 3000 is available
 
 **Verify:**
+
 ```bash
 cd backend
 cat .env | grep -E "(DATABASE|OPENAI|PORT)"
@@ -46,6 +48,7 @@ Should show all your configuration values.
 - [ ] API URL configured (default: localhost:3000)
 
 **Verify:**
+
 ```bash
 cd frontend
 npm list axios
@@ -60,6 +63,7 @@ Should show axios installed.
 - [ ] PDFs are readable (not encrypted/password-protected)
 
 **Verify:**
+
 ```bash
 ls -lh data/*.pdf
 ```
@@ -73,21 +77,24 @@ Should list your PDF files.
 - [ ] Documents processed and stored in database
 
 **Verify:**
+
 ```bash
 cd backend
 npm run ingest
 ```
 
 Should see output like:
+
 ```
-Found 4 PDF files to process
-Processing: /path/to/data/machine_learning.pdf
+Found X PDF files to process
+Processing: /path/to/data/your_document.pdf
 Extracted X characters from PDF
 Created Y chunks
-✓ Successfully processed machine_learning.pdf
+✓ Successfully processed your_document.pdf
 ```
 
 **Then check database:**
+
 ```bash
 psql -U postgres -d qa_system -c "SELECT COUNT(*) FROM documents;"
 psql -U postgres -d qa_system -c "SELECT COUNT(*) FROM embeddings;"
@@ -102,12 +109,14 @@ Should show your documents and embeddings.
 - [ ] Can see console message: "Application is running on: http://localhost:3000"
 
 **Verify:**
+
 ```bash
 cd backend
 npm run start:dev
 ```
 
 In another terminal:
+
 ```bash
 curl http://localhost:3000/api/qa/history
 ```
@@ -122,6 +131,7 @@ Should return JSON with `{"success":true,"history":[]}` or similar.
 - [ ] No console errors in browser DevTools
 
 **Verify:**
+
 ```bash
 cd frontend
 npm run dev
@@ -139,6 +149,7 @@ Open browser to http://localhost:5173 - should see the UI.
 - [ ] Question appears in history panel
 
 **Test Questions:**
+
 1. "What is machine learning?"
 2. "Explain cloud computing"
 3. "What are the key concepts in data science?"
@@ -146,6 +157,7 @@ Open browser to http://localhost:5173 - should see the UI.
 ## ✅ Database Verification
 
 **Check tables created:**
+
 ```sql
 psql -U postgres -d qa_system
 
@@ -159,6 +171,7 @@ SELECT COUNT(*) FROM qa_history;
 ```
 
 **Expected:**
+
 - `documents`: Number of PDFs you ingested
 - `embeddings`: Hundreds to thousands (depending on PDF size)
 - `qa_history`: Increases with each question
@@ -166,6 +179,7 @@ SELECT COUNT(*) FROM qa_history;
 ## Common Issues & Solutions
 
 ### ❌ "Cannot connect to database"
+
 ```bash
 # Check if PostgreSQL is running
 brew services list | grep postgresql
@@ -177,6 +191,7 @@ brew services restart postgresql
 ```
 
 ### ❌ "pgvector extension not found"
+
 ```bash
 # Install pgvector
 brew install pgvector
@@ -186,6 +201,7 @@ psql -U postgres -d qa_system -c "CREATE EXTENSION vector;"
 ```
 
 ### ❌ "OpenAI API error"
+
 ```bash
 # Verify API key
 cd backend
@@ -197,11 +213,13 @@ curl https://api.openai.com/v1/models \
 ```
 
 ### ❌ "Frontend can't reach backend"
+
 - Check backend is running on port 3000
 - Check for CORS errors in browser console
 - Verify `src/services/api.ts` has correct URL
 
 ### ❌ "Ingestion fails"
+
 - Check PDF files are valid
 - Check OpenAI API has credits
 - Check database connection
@@ -210,6 +228,7 @@ curl https://api.openai.com/v1/models \
 ## Performance Checks
 
 ### Response Time
+
 - Question to answer should be 3-6 seconds
 - If slower, check:
   - OpenAI API response time
@@ -217,16 +236,17 @@ curl https://api.openai.com/v1/models \
   - Network latency
 
 ### Database Queries
+
 ```sql
 -- Check embedding distribution
-SELECT document_id, COUNT(*) 
-FROM embeddings 
+SELECT document_id, COUNT(*)
+FROM embeddings
 GROUP BY document_id;
 
 -- Check recent questions
-SELECT question, created_at 
-FROM qa_history 
-ORDER BY created_at DESC 
+SELECT question, created_at
+FROM qa_history
+ORDER BY created_at DESC
 LIMIT 5;
 ```
 
@@ -235,12 +255,14 @@ LIMIT 5;
 Monitor during operation:
 
 **CPU**: Should be low (<20%) when idle
-**Memory**: 
+**Memory**:
+
 - Backend: ~100-300MB
 - Frontend: ~50-100MB
 - PostgreSQL: ~100-500MB
 
 **Disk**:
+
 - Database size: Check with `\l+` in psql
 - Typical: 10-100MB per 100 pages of PDFs
 
@@ -252,7 +274,7 @@ Run this complete test:
 # Terminal 1: Start backend
 cd backend && npm run start:dev
 
-# Terminal 2: Start frontend  
+# Terminal 2: Start frontend
 cd frontend && npm run dev
 
 # Terminal 3: Test API
@@ -266,6 +288,7 @@ curl -X POST http://localhost:3000/api/qa/ask \
 ## Success! 🎉
 
 If all checks pass:
+
 - ✅ System is properly configured
 - ✅ Ready to use
 - ✅ Can ask questions about your documents
@@ -281,8 +304,8 @@ If all checks pass:
 ---
 
 **Need Help?**
+
 - Check [README.md](README.md) for detailed documentation
 - Review [ARCHITECTURE.md](ARCHITECTURE.md) for system design
 - See [QUICKSTART.md](QUICKSTART.md) for rapid setup
 - Read [DEPLOYMENT.md](DEPLOYMENT.md) for production deployment
-

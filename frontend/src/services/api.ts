@@ -42,7 +42,7 @@ export const askQuestion = async (
 };
 
 export const getHistory = async (
-  limit: number = 10
+  limit: number = 30
 ): Promise<QAHistoryResponse> => {
   try {
     const response = await axios.get<QAHistoryResponse>(

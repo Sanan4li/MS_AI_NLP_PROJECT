@@ -34,7 +34,7 @@ function App() {
 
   const fetchHistory = async () => {
     try {
-      const response = await getHistory(10);
+      const response = await getHistory(30);
       if (response.success) {
         setHistory(response.history);
       }
@@ -82,10 +82,8 @@ function App() {
     <div className="app">
       <div className="app-container">
         <header className="app-header">
-          <h1 className="app-title">Document Q&A System</h1>
-          <p className="app-subtitle">
-            Ask questions about your documents powered by AI
-          </p>
+          <h1 className="app-title">UET's Department Related Q&A System</h1>
+          <p className="app-subtitle">Ask questions about UET's Departments</p>
         </header>
 
         <div className="app-content">

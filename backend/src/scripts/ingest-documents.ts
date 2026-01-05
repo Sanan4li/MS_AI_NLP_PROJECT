@@ -57,8 +57,8 @@ async function processPDF(
     const document = await documentService.createDocument(filename, filepath);
     console.log(`Created document record: ${document.id}`);
 
-    // Chunk the text
-    const chunks = chunkText(text?.text ?? '', 1000);
+    // Chunk the text (reduced size to avoid context length issues with embeddings)
+    const chunks = chunkText(text?.text ?? '', 500);
     console.log(`Created ${chunks.length} chunks`);
 
     // Create embeddings for chunks in batches

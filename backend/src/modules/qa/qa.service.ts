@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Ollama } from 'ollama';
 import { Repository } from 'typeorm';
 import { Embedding } from '../../entities/embedding.entity';
@@ -12,7 +13,9 @@ export class QAService {
   private ollama: Ollama;
 
   constructor(
+    @InjectRepository(QAHistory)
     private qaHistoryRepository: Repository<QAHistory>,
+    @InjectRepository(Embedding)
     private embeddingRepository: Repository<Embedding>,
     private embeddingService: EmbeddingService,
     private configService: ConfigService,
@@ -27,9 +30,11 @@ export class QAService {
     sources: any[];
   }> {
     try {
-      // 1. Create embedding for the question
-      const questionEmbedding =
-        await this.embeddingService.createEmbedding(question);
+      // 1. Create embedding for the question (with query prefix)
+      const questionEmbedding = await this.embeddingService.createEmbedding(
+        question,
+        true,
+      );
 
       // 2. Search for similar embeddings using cosine similarity
       const relevantChunks = await this.searchSimilarEmbeddings(
@@ -99,8 +104,7 @@ export class QAService {
     context: string,
   ): Promise<string> {
     const systemPrompt = `You are a helpful assistant that answers questions based on the provided context. 
-  If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
-  Always provide accurate, concise, and helpful answers.`;
+  If the answer cannot be found in the context, say "I can only answer questions about UET Lahore's departments and academic programs."`;
 
     const userPrompt = `Context:
   ${context}

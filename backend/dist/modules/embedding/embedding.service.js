@@ -8,43 +8,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmbeddingService = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const openai_1 = __importDefault(require("openai"));
+const ollama_1 = require("ollama");
 let EmbeddingService = class EmbeddingService {
     configService;
-    openai;
+    ollama;
     constructor(configService) {
         this.configService = configService;
-        this.openai = new openai_1.default({
-            apiKey: process.env.OPENAI_API_KEY || '',
+        this.ollama = new ollama_1.Ollama({
+            host: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         });
     }
-    async createEmbedding(text) {
+    async createEmbedding(text, isQuery = false) {
         try {
-            const response = await this.openai.embeddings.create({
-                model: 'text-embedding-3-small',
-                input: text,
+            const prompt = isQuery
+                ? `Represent this sentence for searching relevant passages: ${text}`
+                : text;
+            const response = await this.ollama.embeddings({
+                model: 'mxbai-embed-large',
+                prompt: prompt,
             });
-            return response.data[0].embedding;
+            return response.embedding;
         }
         catch (error) {
             console.error('Error creating embedding:', error);
             throw error;
         }
     }
-    async createEmbeddings(texts) {
+    async createEmbeddings(texts, isQuery = false) {
         try {
-            const response = await this.openai.embeddings.create({
-                model: 'text-embedding-3-small',
-                input: texts,
-            });
-            return response.data.map((item) => item.embedding);
+            const embeddings = [];
+            for (const text of texts) {
+                const embedding = await this.createEmbedding(text, isQuery);
+                embeddings.push(embedding);
+            }
+            return embeddings;
         }
         catch (error) {
             console.error('Error creating embeddings:', error);

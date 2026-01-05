@@ -47,8 +47,8 @@ A full-stack Question-Answer system that uses RAG (Retrieval-Augmented Generatio
 ## Features
 
 - 📄 **PDF Document Processing**: Automatically extract and chunk text from PDF documents
-- 🔍 **Semantic Search**: Use OpenAI embeddings for accurate similarity search
-- 🤖 **AI-Powered Answers**: Generate contextual answers using GPT-4o-mini
+- 🔍 **Semantic Search**: Use mxbai-embed-large embeddings for accurate similarity search
+- 🤖 **AI-Powered Answers**: Generate contextual answers using gemma3:4b
 - 💾 **Persistent Storage**: Store embeddings and Q&A history in PostgreSQL
 - 🎨 **Modern UI**: Beautiful, responsive React interface
 - 📊 **Question History**: View and revisit previous questions
@@ -65,12 +65,14 @@ A full-stack Question-Answer system that uses RAG (Retrieval-Augmented Generatio
 ### 1. Install PostgreSQL and pgvector
 
 **macOS (Homebrew):**
+
 ```bash
 brew install postgresql pgvector
 brew services start postgresql
 ```
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt-get install postgresql postgresql-contrib
 # Follow pgvector installation from: https://github.com/pgvector/pgvector
@@ -90,6 +92,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 ```
 
 Or use the provided script:
+
 ```bash
 psql -U postgres -f backend/database-setup.sql
 ```
@@ -106,8 +109,7 @@ DATABASE_USER=postgres
 DATABASE_PASSWORD=your_password
 DATABASE_NAME=qa_system
 
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key_here
+
 
 # Application Configuration
 PORT=3000
@@ -116,12 +118,14 @@ PORT=3000
 ### 4. Install Dependencies
 
 **Backend:**
+
 ```bash
 cd backend
 npm install
 ```
 
 **Frontend:**
+
 ```bash
 cd frontend
 npm install
@@ -132,10 +136,8 @@ npm install
 ### Step 1: Add Your Documents
 
 Place your PDF documents in the `data/` folder. The system currently includes:
-- cloud_computing.pdf
-- data_science.pdf
-- machine_learning.pdf
-- web_development.pdf
+
+- UET Lahore department-related documents
 
 ### Step 2: Run Data Ingestion
 
@@ -147,6 +149,7 @@ npm run ingest
 ```
 
 This will:
+
 1. Read all PDF files from `data/`
 2. Extract and chunk text
 3. Generate embeddings using OpenAI
@@ -189,9 +192,11 @@ Frontend will be available at: http://localhost:5173
 ## API Endpoints
 
 ### POST /api/qa/ask
+
 Ask a question and get an AI-generated answer.
 
 **Request:**
+
 ```json
 {
   "question": "What is machine learning?"
@@ -199,6 +204,7 @@ Ask a question and get an AI-generated answer.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -215,9 +221,11 @@ Ask a question and get an AI-generated answer.
 ```
 
 ### GET /api/qa/history?limit=10
+
 Get recent Q&A history.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -237,10 +245,6 @@ Get recent Q&A history.
 ```
 NLP_Project/
 ├── data/                          # PDF documents
-│   ├── cloud_computing.pdf
-│   ├── data_science.pdf
-│   ├── machine_learning.pdf
-│   └── web_development.pdf
 ├── backend/                       # NestJS Backend
 │   ├── src/
 │   │   ├── config/               # Database configuration
@@ -276,6 +280,7 @@ NLP_Project/
 ## Technology Stack
 
 ### Backend
+
 - **NestJS** - Progressive Node.js framework
 - **TypeORM** - ORM for database operations
 - **PostgreSQL** - Relational database
@@ -284,24 +289,28 @@ NLP_Project/
 - **pdf-parse** - PDF text extraction
 
 ### Frontend
+
 - **React** - UI library
 - **TypeScript** - Type-safe JavaScript
 - **Vite** - Fast build tool
 - **Axios** - HTTP client
 
 ### AI/ML
-- **text-embedding-3-small** - Embedding model (1536 dimensions)
-- **gpt-4o-mini** - Text generation model
+
+- **mxbai-embed-large** - Embedding model (1536 dimensions)
+- **gemma3:4b** - Text generation model
 
 ## How It Works
 
 ### 1. Document Ingestion
+
 - PDFs are parsed and text is extracted
 - Text is chunked into ~1000 character segments
 - Each chunk is converted to a vector embedding (1536 dimensions)
 - Embeddings are stored in PostgreSQL with pgvector
 
 ### 2. Question Answering
+
 - User question is converted to embedding
 - Vector similarity search finds top 5 relevant chunks
 - Relevant chunks form the context for the LLM
@@ -310,7 +319,9 @@ NLP_Project/
 - Q&A is stored in history
 
 ### 3. Vector Search
+
 Uses pgvector's cosine distance operator for similarity:
+
 ```sql
 SELECT * FROM embeddings
 ORDER BY embedding <=> '[query_vector]'
@@ -320,11 +331,13 @@ LIMIT 5;
 ## Troubleshooting
 
 ### Backend won't start
+
 - Ensure PostgreSQL is running: `brew services list` (macOS)
 - Verify database credentials in `.env`
 - Check if port 3000 is available
 
 ### pgvector errors
+
 ```bash
 # Install pgvector
 brew install pgvector
@@ -333,17 +346,20 @@ brew install pgvector
 psql -U postgres -d qa_system -c "CREATE EXTENSION vector;"
 ```
 
-### OpenAI API errors
+### Ollama API errors
+
 - Verify API key in `.env`
-- Check OpenAI account has credits
-- Ensure access to required models
+- Check Ollama account has credits
+- Ensure access to required models: mxbai-embed-large and gemma3:4b
 
 ### Frontend can't connect to backend
+
 - Verify backend is running on port 3000
 - Check CORS settings in `backend/src/main.ts`
 - Ensure API_BASE_URL is correct in `frontend/src/services/api.ts`
 
 ### Ingestion takes too long
+
 - The process creates embeddings for all document chunks
 - Large documents take more time
 - OpenAI API has rate limits
@@ -372,5 +388,4 @@ This project is for educational purposes.
 
 ## Credits
 
-Built with ❤️ using OpenAI, NestJS, React, and PostgreSQL.
-
+Built with ❤️ by Sanan and Team using Ollama, NestJS, React, and PostgreSQL with pgvector.

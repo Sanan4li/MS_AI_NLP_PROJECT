@@ -8,12 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QAService = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
+const typeorm_1 = require("@nestjs/typeorm");
 const ollama_1 = require("ollama");
-const typeorm_1 = require("typeorm");
+const typeorm_2 = require("typeorm");
+const embedding_entity_1 = require("../../entities/embedding.entity");
+const qa_history_entity_1 = require("../../entities/qa-history.entity");
 const embedding_service_1 = require("../embedding/embedding.service");
 let QAService = class QAService {
     qaHistoryRepository;
@@ -32,7 +38,7 @@ let QAService = class QAService {
     }
     async askQuestion(question) {
         try {
-            const questionEmbedding = await this.embeddingService.createEmbedding(question);
+            const questionEmbedding = await this.embeddingService.createEmbedding(question, true);
             const relevantChunks = await this.searchSimilarEmbeddings(questionEmbedding, 3);
             const context = relevantChunks
                 .map((chunk, index) => `[${index + 1}] ${chunk.content}`)
@@ -75,8 +81,7 @@ let QAService = class QAService {
     }
     async generateAnswer(question, context) {
         const systemPrompt = `You are a helpful assistant that answers questions based on the provided context. 
-  If the answer cannot be found in the context, say "I don't have enough information to answer this question based on the available documents."
-  Always provide accurate, concise, and helpful answers.`;
+  If the answer cannot be found in the context, say "I can only answer questions about UET Lahore's departments and academic programs."`;
         const userPrompt = `Context:
   ${context}
   
@@ -121,8 +126,10 @@ let QAService = class QAService {
 exports.QAService = QAService;
 exports.QAService = QAService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeorm_1.Repository,
-        typeorm_1.Repository,
+    __param(0, (0, typeorm_1.InjectRepository)(qa_history_entity_1.QAHistory)),
+    __param(1, (0, typeorm_1.InjectRepository)(embedding_entity_1.Embedding)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         embedding_service_1.EmbeddingService,
         config_1.ConfigService])
 ], QAService);

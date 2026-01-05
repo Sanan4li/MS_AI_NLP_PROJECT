@@ -29,9 +29,9 @@
 └────────────────────────────┬┼─────────────────────────────────┘
                              ││
                   ┌──────────▼▼─────────┐
-                  │   OpenAI API        │
-                  │  • text-embedding   │
-                  │  • gpt-4o-mini      │
+                  │   Ollama API        │
+                  │  • mxbai-embed-large   │
+                  │  • gemma3:4b      │
                   └─────────────────────┘
                              │
 ┌────────────────────────────▼────────────────────────────────────┐
@@ -88,6 +88,7 @@
 ## Database Schema
 
 ### documents
+
 ```sql
 CREATE TABLE documents (
   id UUID PRIMARY KEY,
@@ -98,6 +99,7 @@ CREATE TABLE documents (
 ```
 
 ### embeddings
+
 ```sql
 CREATE TABLE embeddings (
   id UUID PRIMARY KEY,
@@ -113,6 +115,7 @@ CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops);
 ```
 
 ### qa_history
+
 ```sql
 CREATE TABLE qa_history (
   id UUID PRIMARY KEY,
@@ -129,16 +132,19 @@ CREATE TABLE qa_history (
 ### Frontend Components
 
 **QuestionInput**
+
 - User input capture
 - Form validation
 - Loading state management
 
 **AnswerDisplay**
+
 - Display Q&A pair
 - Show source chunks
 - Format response
 
 **HistoryPanel**
+
 - List recent questions
 - Navigate to previous Q&A
 - Scrollable interface
@@ -146,16 +152,19 @@ CREATE TABLE qa_history (
 ### Backend Modules
 
 **EmbeddingModule**
+
 - Create embeddings via OpenAI API
 - Batch processing support
 - Error handling
 
 **DocumentModule**
+
 - Store document metadata
 - Store embeddings with content
 - Query documents
 
 **QAModule**
+
 - Receive questions from frontend
 - Orchestrate embedding + search + generation
 - Store Q&A history
@@ -164,16 +173,19 @@ CREATE TABLE qa_history (
 ### Services
 
 **EmbeddingService**
+
 - Interface with OpenAI embeddings API
 - Handle single and batch requests
 - Error handling and retries
 
 **DocumentService**
+
 - CRUD operations for documents
 - CRUD operations for embeddings
 - Database transactions
 
 **QAService**
+
 - Question processing pipeline
 - Vector similarity search
 - LLM answer generation
@@ -202,6 +214,7 @@ CREATE TABLE qa_history (
 ## Technology Decisions
 
 ### Why NestJS?
+
 - TypeScript-first framework
 - Excellent dependency injection
 - Built-in TypeORM support
@@ -209,19 +222,22 @@ CREATE TABLE qa_history (
 - Enterprise-ready
 
 ### Why pgvector?
+
 - Native PostgreSQL extension
 - Fast similarity search
 - Supports cosine distance
 - No separate vector DB needed
 - Simplified architecture
 
-### Why OpenAI?
-- State-of-the-art embeddings
-- Reliable API
+### Why Ollama?
+
+- Open-source, local LLM
+- mxbai-embed-large: cost-effective, 1536 dims
+- gemma3:4b: fast and affordable
 - text-embedding-3-small: cost-effective, 1536 dims
-- gpt-4o-mini: fast and affordable
 
 ### Why React + Vite?
+
 - Fast development
 - Hot module replacement
 - TypeScript support
@@ -231,21 +247,25 @@ CREATE TABLE qa_history (
 ## Performance Characteristics
 
 **Embedding Creation**
+
 - ~0.5s per chunk
 - Batched in groups of 10
 - One-time cost per document
 
 **Vector Search**
+
 - <100ms for similarity search
 - Indexed with ivfflat
 - Top 5 results retrieved
 
 **Answer Generation**
+
 - 2-5 seconds per question
 - Depends on context size
 - gpt-4o-mini optimized for speed
 
 **End-to-End Latency**
+
 - Question → Answer: 3-6 seconds
 - Depends on OpenAI API response time
 - Cached embeddings speed up search
@@ -253,11 +273,13 @@ CREATE TABLE qa_history (
 ## Scalability Considerations
 
 **Current Design** (Small to Medium Scale)
+
 - Single PostgreSQL instance
 - Synchronous request processing
 - Suitable for: <1000 documents, <100 concurrent users
 
 **Future Enhancements** (Large Scale)
+
 - Redis caching layer
 - Message queue for ingestion (Bull/RabbitMQ)
 - Connection pooling
@@ -269,11 +291,13 @@ CREATE TABLE qa_history (
 ## Security Considerations
 
 **Current Implementation**
+
 - CORS enabled for localhost
 - No authentication (MVP)
 - API keys in environment variables
 
 **Production Requirements**
+
 - JWT authentication
 - API rate limiting
 - Input sanitization
@@ -281,4 +305,3 @@ CREATE TABLE qa_history (
 - HTTPS/TLS
 - API key rotation
 - Logging and monitoring
-

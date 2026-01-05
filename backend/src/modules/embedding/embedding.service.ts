@@ -1,39 +1,53 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import OpenAI from 'openai';
+import { Ollama } from 'ollama';
 
 @Injectable()
 export class EmbeddingService {
-  private openai: OpenAI;
+  private ollama: Ollama;
 
   constructor(private configService: ConfigService) {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || '',
+    this.ollama = new Ollama({
+      host: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
     });
   }
 
-  async createEmbedding(text: string): Promise<number[]> {
+  async createEmbedding(
+    text: string,
+    isQuery: boolean = false,
+  ): Promise<number[]> {
     try {
-      const response = await this.openai.embeddings.create({
-        model: 'text-embedding-3-small',
-        input: text,
+      // Only add the query prefix for search queries, not for document chunks
+      const prompt = isQuery
+        ? `Represent this sentence for searching relevant passages: ${text}`
+        : text;
+
+      const response = await this.ollama.embeddings({
+        model: 'mxbai-embed-large',
+        prompt: prompt,
       });
 
-      return response.data[0].embedding;
+      return response.embedding;
     } catch (error) {
       console.error('Error creating embedding:', error);
       throw error;
     }
   }
 
-  async createEmbeddings(texts: string[]): Promise<number[][]> {
+  async createEmbeddings(
+    texts: string[],
+    isQuery: boolean = false,
+  ): Promise<number[][]> {
     try {
-      const response = await this.openai.embeddings.create({
-        model: 'text-embedding-3-small',
-        input: texts,
-      });
+      const embeddings: number[][] = [];
 
-      return response.data.map((item) => item.embedding);
+      // Ollama processes embeddings one at a time
+      for (const text of texts) {
+        const embedding = await this.createEmbedding(text, isQuery);
+        embeddings.push(embedding);
+      }
+
+      return embeddings;
     } catch (error) {
       console.error('Error creating embeddings:', error);
       throw error;
