@@ -1,0 +1,79 @@
+NLP Class Projects (Team of 3–4 Students)
+
+OVERVIEW:
+This document provides step-by-step instructions for the NLP class project. Students must work in teams of 3–4 and follow all steps carefully. The final project should be professional, well-documented, and suitable for GitHub submission.
+
+STEP 1 — MAKE A GROUP:
+
+
+STEP 2 — UNDERSTAND THE DATA SOURCE:
+• Use only ONE PDF document: UET Prospectus.
+• The chatbot must answer ONLY department-related questions.
+• If a user asks anything else, the chatbot must reply: "I only answer department information."
+
+STEP 3 — DRAW THE ARCHITECTURE DIAGRAM (Before Coding):
+Create a simple architecture diagram showing the following components or additional based on your architecture:
+1. PDF → Preprocessing
+2. Data Storage (Vector Database / Graph / Knowledge Base)
+3. Retriever (find relevant text)
+4. LLM (gemma3 via Ollama or vLLM)
+5. Guardrail (check if the question is department-related)
+6. API Layer (FastAPI)
+7. GUI (Chat Interface)
+You may use draw.io or any similar diagramming tool.
+
+STEP 4 — DIVIDE TASKS (Team Responsibilities):
+Create a simple task division plan, for example:
+• Person 1: PDF reading, cleaning, and chunking
+• Person 2: RAG / Graph / Agent logic
+• Person 3: Backend API development (FastAPI)
+• Person 4: GUI development, testing, and video recording
+
+STEP 5 — BUILD REST API:
+Develop the backend using FastAPI.
+Required endpoint:
+• POST /chat → Takes user message and returns an answer with citations.
+
+STEP 6 — BUILD GUI CHATBOT:
+Create a simple chat interface using one of the following:
+• Streamlit
+• Gradio
+• React etc.
+The GUI must display:
+• User messages
+• Chatbot responses
+
+STEP 7 — ORGANIZE YOUR PROJECT FOLDER STRUCTURE:
+Your repository must include:
+• requirements.txt
+• README.md
+• Proper folder structure
+• Architecture diagram file
+
+Recommended folder structure:
+backend/
+frontend/
+data/
+diagrams/
+tests/
+requirements.txt
+README.md
+
+STEP 8 — TESTING:
+Prepare at least 20 test questions:
+• 10 department-related questions
+• 5 tricky questions
+• 5 out-of-scope questions
+Test the system and save them in:
+tests/test_queries.json
+
+STEP 9 — RECORD VIDEO AND PRESENTATION:
+Record a 6–10 minute video covering:
+1. Architecture diagram explanation
+2. Team task division
+3. Live demo with 3 questions:
+   - Department-related question
+   - Tricky question
+   - Out-of-scope question
+4. Project repository structure
+Add the video link to the README.md file.
