@@ -143,6 +143,12 @@ Checks if the question relates to UET Lahore departments, academics, admissions,
 - **Integration**: Coordinates between Guardrail, Retriever, and LLM services
 - **Data Persistence**: Stores Q&A history in PostgreSQL
 
+#### 6.1 API Layer (NestJS Backend)
+
+- **Framework**: FastAPI with Python
+- **REST API**: Exposes endpoints for question answering and history retrieval
+- **Integration**: Coordinates between Guardrail, Retriever, and LLM services
+
 ### 7. GUI (Chat Interface)
 
 - **Framework**: React with TypeScript and Vite

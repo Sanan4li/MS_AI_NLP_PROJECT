@@ -1,0 +1,216 @@
+{
+  "success": true,
+  "history": [
+    {
+      "id": "b9526245-39d3-48a1-9756-56d7a2f65abc",
+      "question": "Which department offers MS in AI?",
+
+      "answer": "The Department of Electrical Engineering and the Department of Artificial Intelligence offer M.Sc. degrees in Artificial Intelligence.",
+
+      "created_at": "2026-01-12T20:21:51.731Z"
+    },
+    {
+      "id": "7a3d813a-7858-4a24-a6aa-37a1e8716642",
+      "question": "What is offererd in Electrical Engineering department for MS?",
+
+      "answer": "The Department of Electrical Engineering offers M.Sc. degrees in Electrical Engineering and M.Sc. in Artificial Intelligence.",
+
+      "created_at": "2026-01-12T17:43:09.156Z"
+    },
+    {
+      "id": "7a28266f-b1d9-4ebb-ad4a-52dffed5af4e",
+      "question": "What is offererd in Electrical Engineering department for MS?",
+
+      "answer": "The Department of Electrical Engineering offers M.Sc. degrees in Electrical Engineering and M.Sc. in Artificial Intelligence.",
+
+      "created_at": "2026-01-10T06:05:32.124Z"
+    },
+    {
+      "id": "a962673a-0aa8-4796-9266-6c2046d7089f",
+      "question": "What is criteria for MS in AI",
+
+      "answer": "I can only answer questions about UET Lahore's departments and academic programs.",
+
+      "created_at": "2026-01-10T05:30:19.264Z"
+    },
+    {
+      "id": "c6ac5612-2016-4785-b689-1331f5bb69e4",
+      "question": "I am looking for the Institute of Environmental Engineering & Research. What are the specific eligibility criteria for their M.Phil. Environmental Sciences?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:20:04.244Z"
+    },
+    {
+      "id": "2ff3271b-dc73-45b4-a216-5d1f59a12150",
+      "question": "I am looking for the Institute of Environmental Engineering & Research. What are the specific eligibility criteria for their M.Phil. Environmental Sciences?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:11:31.216Z"
+    },
+    {
+      "id": "54e95bf7-cca1-4de9-8e87-237f8f2a09be",
+      "question": "Who is the current Dean of the Faculty of Mechanical Engineering?",
+
+      "answer": "Dr. Muhammad Shoaib is the current Dean of the Faculty of Mechanical Engineering.",
+
+      "created_at": "2026-01-05T20:09:37.169Z"
+    },
+
+    {
+      "id": "73b16cf3-45ae-4a83-b164-b81b7613e0c8",
+      "question": "I want to apply for M.Sc. Artificial Intelligence. Should I select the Department of Computer Science on my form, or is this program offered by another department?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:06:26.100Z"
+    },
+    {
+      "id": "ed90ccf0-71a0-454b-bf25-6fa2c2228d08",
+      "question": "Is there an entry test required for the MS programs? If so, what is the passing score?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:05:50.499Z"
+    },
+    {
+      "id": "6adc6d94-bc58-4d62-af1b-52d3ff2ec72a",
+      "question": "Does the university provide transport/bus service for students commuting from other cities?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:05:31.990Z"
+    },
+    {
+      "id": "6062ec6b-55a7-4a56-8243-1f50ec5a771d",
+      "question": "What is the last date to submit my admission form for the Spring 2026 session?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:05:11.330Z"
+    },
+    {
+      "id": "e25a9367-1eb6-4b4d-876d-7f13dc656729",
+      "question": "Are there hostel facilities available for postgraduate students at the Lahore campus?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:05:03.226Z"
+    },
+    {
+      "id": "e51551f4-f555-4a76-844a-2e1658d96b3c",
+      "question": "What is the fee structure for the M.Sc. programs?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:04:45.497Z"
+    },
+    {
+      "id": "ef50d64d-4389-47ae-b72f-afb7d9f89a34",
+      "question": "I have a degree in Physics. Can I apply for M.Phil. Polymer Science & Technology, or is that only for chemical engineers?",
+
+      "answer": "Yes, you can apply for M.Phil. Polymer Science & Technology with a degree in Physics. The eligibility criteria states that a 16-year education in Polymer Engg, Chemical Engg, Materials Science & Engg, Physics, Chemistry, or Mechanical Engineering is sufficient.",
+
+      "created_at": "2026-01-05T20:03:43.104Z"
+    },
+    {
+      "id": "8650d304-3ab9-47e6-8a84-75e5de7f6ef3",
+      "question": "I see a program called M.Sc. Disaster Management and another called M.Sc. Disaster Mitigation Engineering. Which one is offered by the Civil Engineering department?",
+
+      "answer": "M.Sc. Disaster Mitigation Engineering is offered by the Civil Engineering department.",
+
+      "created_at": "2026-01-05T20:02:59.562Z"
+    },
+    {
+      "id": "2d0679a6-32de-4635-acd5-90a9a9f7d7ca",
+      "question": "I live near the UET. Does the Department of Chemical Engineering offer any safety-related master's programs there?",
+
+      "answer": "Yes, the Department of Chemical Engineering offers an M.Sc. Safety, Health and Environment program.",
+
+      "created_at": "2026-01-05T20:01:59.360Z"
+    },
+    {
+      "id": "e3e98a6d-7317-41ba-a8db-66f66c52bf00",
+      "question": "I am interested in Geological Engineering. Is that the same as Geotechnical Engineering offered by the Civil Department, or is there a separate department for it?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T20:01:27.961Z"
+    },
+
+    {
+      "id": "1e7ace9e-1aee-462a-acdc-9b069b8a4646",
+      "question": "I am looking for the faculty list for the Department of Mathematics. Who is the Chairperson?",
+
+      "answer": "Prof. Dr. Muhammad Mushtaq is the Chairperson.",
+
+      "created_at": "2026-01-05T20:00:20.211Z"
+    },
+    {
+      "id": "de52b601-2388-416a-8466-22b1106d50ce",
+      "question": "Is there any specific department that deals with Transportation Engineering?",
+
+      "answer": "Yes, the Department of Transportation Engineering & Management exists.",
+
+      "created_at": "2026-01-05T20:00:02.760Z"
+    },
+    {
+      "id": "92f152e5-af7a-40c2-a420-b5476fc16f13",
+      "question": "I want to do an Executive MBA. Does the Institute of Business and Management require any professional experience for this degree?",
+
+      "answer": "Yes, the Institute of Business and Management requires 3 years of professional experience for the Executive MBA.",
+
+      "created_at": "2026-01-05T19:58:32.589Z"
+    },
+    {
+      "id": "8a9480e0-6d5e-4416-b991-6662b86b9f7c",
+      "question": "I heard the Department of Petroleum & Gas Engineering is highly ranked. Is there any mention of their world ranking in the prospectus?",
+
+      "answer": "Yes, the program at UET Lahore has been ranked (51-100) in the world by the prestigious QS Ranking by subject.",
+
+      "created_at": "2026-01-05T19:57:20.218Z"
+    },
+    {
+      "id": "13e58f9c-51bb-4b08-9e99-b8db18208738",
+      "question": "Can you tell me which department offers the M.Sc. Mining Engineering program?",
+
+      "answer": "The Department of Mining Engineering offers the M.Sc. Mining Engineering program.",
+
+      "created_at": "2026-01-05T19:56:29.598Z"
+    },
+    {
+      "id": "fc2e8567-8f8c-419c-aad4-cd9a9a8e8796",
+      "question": "I am looking for the Institute of Environmental Engineering & Research. What are the specific eligibility criteria for their M.Phil. Environmental Sciences?",
+
+      "answer": "I don't have enough information to answer this question based on the available documents.",
+
+      "created_at": "2026-01-05T19:55:09.579Z"
+    },
+    {
+      "id": "d3d5adb2-1275-4ade-b04c-7b5ae6c8419a",
+      "question": "Does the Department of Architecture offer a Ph.D. program, or is it only for Master's students?",
+
+      "answer": "Yes, the Department of Architecture offers a Ph.D. in Architecture.",
+
+      "created_at": "2026-01-05T19:54:51.183Z"
+    },
+
+    {
+      "id": "86dc1a93-354c-4152-a4e5-26e4ae407ed0",
+      "question": "I have completed my 16 years of education in Computer Science. Am I eligible to apply for the M.Sc. Data Science program?",
+
+      "answer": "Yes, based on the provided documents, you are eligible to apply for the M.Sc. Data Science program. The eligibility criteria state that sixteen-year education with a terminal degree in Computing (or a suitable degree) is required.",
+
+      "created_at": "2026-01-05T19:52:16.304Z"
+    },
+    {
+      "id": "c2bcda1a-a927-43eb-bca0-e9cb0d8bbf4f",
+      "question": "I am interested in the Department of Electrical Engineering. Can you list all the programs they are offering this spring?",
+
+      "answer": "The Department of Electrical Engineering currently offers Ph.D. and M.Sc. degrees in Electrical Engineering and M.Sc. in Artificial Intelligence.",
+
+      "created_at": "2026-01-05T19:48:21.171Z"
+    }
+  ]
+}
