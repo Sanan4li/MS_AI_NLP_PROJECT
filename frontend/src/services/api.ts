@@ -1,16 +1,13 @@
 import axios from "axios";
 
 const API_BASE_URL = "http://localhost:3000";
+// const API_BASE_URL_FASTAPI = "http://localhost:8000";
 
 export interface AskQuestionResponse {
   success: boolean;
   question: string;
   answer: string;
-  sources: Array<{
-    content: string;
-    document_id: string;
-    chunk_index: number;
-  }>;
+  sources: Array<string>;
   error?: string;
 }
 
@@ -29,11 +26,10 @@ export interface QAHistoryResponse {
 export const askQuestion = async (
   question: string
 ): Promise<AskQuestionResponse> => {
+  // const URL = `${API_BASE_URL}/ask`;
+  const URL = `${API_BASE_URL}/api/qa/ask`;
   try {
-    const response = await axios.post<AskQuestionResponse>(
-      `${API_BASE_URL}/api/qa/ask`,
-      { question }
-    );
+    const response = await axios.post<AskQuestionResponse>(URL, { question });
     return response.data;
   } catch (error) {
     console.error("Error asking question:", error);
