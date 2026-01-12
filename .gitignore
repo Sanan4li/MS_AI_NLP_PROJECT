@@ -55,3 +55,10 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+# Fastapi Backend
+UET lahore Document.pdf
+.venv
+chroma_db
+__pycache__
