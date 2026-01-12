@@ -4,7 +4,7 @@ A full-stack Question-Answer system that uses RAG (Retrieval-Augmented Generatio
 
 ## Video Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/m0J9JENuls0?si=y5nRBFrfPDMrfh81" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/https://www.youtube.com/watch?v=m0J9JENuls0/0.jpg)](https://www.youtube.com/watch?v=m0J9JENuls0)
 
 ## Architecture
 
