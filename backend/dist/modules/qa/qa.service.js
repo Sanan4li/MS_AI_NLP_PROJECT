@@ -47,11 +47,7 @@ let QAService = class QAService {
             await this.saveQAHistory(question, questionEmbedding, answer, relevantChunks);
             return {
                 answer,
-                sources: relevantChunks.map((chunk) => ({
-                    content: chunk.content,
-                    document_id: chunk.document_id,
-                    chunk_index: chunk.chunk_index,
-                })),
+                sources: relevantChunks.map((chunk) => chunk.content),
             };
         }
         catch (error) {

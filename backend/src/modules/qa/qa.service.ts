@@ -61,11 +61,7 @@ export class QAService {
       // 6. Return answer and sources
       return {
         answer,
-        sources: relevantChunks.map((chunk) => ({
-          content: chunk.content,
-          document_id: chunk.document_id,
-          chunk_index: chunk.chunk_index,
-        })),
+        sources: relevantChunks.map((chunk) => chunk.content),
       };
     } catch (error) {
       console.error('Error in askQuestion:', error);
