@@ -2,6 +2,10 @@
 
 A full-stack Question-Answer system that uses RAG (Retrieval-Augmented Generation) to answer questions based on your own documents. Built with NestJS, React, PostgreSQL with pgvector, and OpenAI.
 
+## Video Demo
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/m0J9JENuls0?si=y5nRBFrfPDMrfh81" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Architecture
 
 ```
@@ -211,11 +215,8 @@ Ask a question and get an AI-generated answer.
   "question": "What is machine learning?",
   "answer": "Machine learning is a subset of artificial intelligence...",
   "sources": [
-    {
-      "content": "Machine learning algorithms...",
-      "document_id": "uuid",
-      "chunk_index": 0
-    }
+    "Machine learning algorithms...",
+    "Artificial intelligence is the simulation of human intelligence in machines..."
   ]
 }
 ```
