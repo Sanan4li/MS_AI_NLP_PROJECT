@@ -1,7 +1,9 @@
 import axios from "axios";
 
-// const API_BASE_URL = "http://localhost:3000";
-const API_BASE_URL_FASTAPI = "http://localhost:8000";
+const API_BASE_URL = "http://localhost:3000";
+
+// please use the following link for fast API
+// const API_BASE_URL_FASTAPI = "http://localhost:8000";
 
 export interface AskQuestionResponse {
   success: boolean;
@@ -24,10 +26,11 @@ export interface QAHistoryResponse {
 }
 
 export const askQuestion = async (
-  question: string
+  question: string,
 ): Promise<AskQuestionResponse> => {
-  const URL = `${API_BASE_URL_FASTAPI}/ask`;
-  // const URL = `${API_BASE_URL}/api/qa/ask`;
+  // please use the following link for fast API
+  // const URL = `${API_BASE_URL}/ask`;
+  const URL = `${API_BASE_URL}/api/qa/ask`;
   try {
     const response = await axios.post<AskQuestionResponse>(URL, { question });
     return response.data;
@@ -38,11 +41,11 @@ export const askQuestion = async (
 };
 
 export const getHistory = async (
-  limit: number = 30
+  limit: number = 30,
 ): Promise<QAHistoryResponse> => {
   try {
     const response = await axios.get<QAHistoryResponse>(
-      `${API_BASE_URL_FASTAPI}/history?limit=${limit}`
+      `${API_BASE_URL}/api/qa/history?limit=${limit}`,
     );
     return response.data;
   } catch (error) {
